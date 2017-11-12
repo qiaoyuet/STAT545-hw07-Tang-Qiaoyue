@@ -9,11 +9,20 @@ library(forcats)
 gapminder <- read.delim("gapminder.tsv")
 
 # Descriptive Plots
-ggplot(gapminder, aes(year, lifeExp, colour=continent)) + geom_smooth(method="lm", se=FALSE)
+# ggplot(gapminder, aes(year, lifeExp, colour=continent)) + geom_smooth(method="lm", se=FALSE)
+# ggsave("lifeexp_vs_year.png")
+# 
+# ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) + 
+#   geom_point(aes(color=continent), alpha=0.5) + scale_x_log10()
+# ggsave("gdp_vs_lifeexp.png")
+
+ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point()
 ggsave("lifeexp_vs_year.png")
 
-ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) + 
-  geom_point(aes(color=continent), alpha=0.5) + scale_x_log10()
+ggplot(gapminder, aes(x=year, y=gdpPercap)) + geom_point()
+ggsave("gdp_vs_year.png")
+
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) + geom_point()
 ggsave("gdp_vs_lifeexp.png")
 
 # Reorder the continents based on life expectancy
@@ -22,7 +31,7 @@ new_levels <- fct_reorder(gapminder$continent, gapminder$lifeExp, fun = max, des
   levels()
 
 # Sort the actual data in a deliberate fashion using new levels of continent
-gapminder <- gapminder %>%
+gapminder2 <- gapminder %>%
   mutate(continent = factor(as.character(continent), new_levels),
          food = fct_recode(country, 
                            "Sushi" = "Japan",
@@ -35,5 +44,5 @@ gapminder <- gapminder %>%
   droplevels()
 
 # Write the Gapminder data to file
-write.table(gapminder, "gapminder2.tsv", quote = FALSE,
+write.table(gapminder2, "gapminder2.tsv", quote = FALSE,
             sep = "\t", row.names = FALSE)
