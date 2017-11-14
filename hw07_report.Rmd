@@ -5,9 +5,123 @@ date: "2017/11/13"
 output: html_document
 ---
 
-```{r}
-source("01exploratory_analysis.R")
-source("02statistical_analysis.R")
-source("03figures.R")
+```{r, include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(forcats)
 ```
 
+
+# Original Data
+
+Here is a brief look at the original gapminder dataset downloaded from github. It is a large dataframe that contains information like life expectancies, population and gdp recorded throughout 1952~2007 for a lot of countries across the 5 continents.
+
+```{r}
+gapminder <- read.delim("gapminder.tsv")
+head(gapminder)
+str(gapminder)
+```
+
+
+# Descriptive plots
+
+This section presents some descriptive plots that give an idea of the structure and relationships in the gapminder dataset.
+
+![*Fig. 1* GDP vs. Year for all countries](gdp_vs_year.png)
+![*Fig. 2* Life Expectancy vs. Year for all countries](lifeexp_vs_year.png)
+![*Fig. 3* GDP vs. Life Expectancy for all countries](gdp_vs_lifeexp.png)
+
+# Creating a subset of dataset of interest
+
+This section creates a second dataset: gapminder2.tsv for which we are going to investigate further later.
+First we want to reorder the continents based on increasing life expectancies.
+
+```{r}
+old_levels <- levels(gapminder$continent)
+new_levels <- fct_reorder(gapminder$continent, gapminder$lifeExp, fun = max, desc = F) %>% 
+  levels()
+```
+
+Next we want to sort the actual data in a deliberate fashion using new levels of continent. We create a subset of the original data and call it gapminder2. It contains less information than the original dataset so it's easier to present the results in the following sections. Here we create a new column called food that map countries to its setrotype food. The code is taken from my previous homework.
+
+```{r}
+gapminder2 <- gapminder %>%
+  mutate(continent = factor(as.character(continent), new_levels),
+         food = fct_recode(country, 
+                           "Sushi" = "Japan",
+                           "DimSum" = "China",
+                           "Poutine" = "Canada",
+                           "Chili" = "Chile",
+                           "Fish&Chips" = "United Kingdom",
+                           "Wine" = "France",
+                           "Chocolate" = "Belgium",
+                           "Taco" = "Mexico",
+                           "Kimchi" = "Korea, Rep.",
+                           "Porridge" = "Zambia",
+                           "Boerewors" = "South Africa",
+                           "Chapati" = "Tanzania",
+                           "Milk" = "New Zealand",
+                           "kangaroo" = "Australia")) %>%
+  filter(country %in% c("Japan", "Canada", "United Kingdom", "Mexico", "Korea, Rep.",
+                        "China","Chile","France","Belgium","Zambia","South Africa",
+                        "Tanzania","New Zealand","Australia")) %>%
+  arrange(lifeExp) %>%
+  droplevels()
+head(gapminder2)
+str(gapminder2)
+```
+
+
+# Statistical Results
+
+In this section, we first fit some linear regressions for life expectancies on year for a selected number of countries. The result of lm output including the estimates of intercept and slope and the standard errors are stored in a tsv file. 
+
+```{r}
+# Make sure your new continent order is still in force.
+old_levels2 <- levels(gapminder2$continent)
+new_levels2 <- fct_reorder(gapminder2$continent, gapminder2$lifeExp, fun = max, desc = F) %>% 
+  levels()
+
+# Fit a linear regression of life expectancy on year within selected countries. 
+model.k <- lm(lifeExp~year, data = gapminder2, subset = (country == "Korea, Rep."))
+df1 <- tidy(model.k)
+model.j <- lm(lifeExp~year, data = gapminder2, subset = (country == "Japan"))
+df2 <- tidy(model.j)
+model.c <- lm(lifeExp~year, data = gapminder2, subset = (country == "Canada"))
+df3 <- tidy(model.c)
+model.uk <- lm(lifeExp~year, data = gapminder2, subset = (country == "United Kingdom"))
+df4 <- tidy(model.uk)
+model.m <- lm(lifeExp~year, data = gapminder2, subset = (country == "Mexico"))
+df5 <- tidy(model.m)
+
+result <- read.delim("lm_info.tsv")
+knitr::kable(result)
+```
+
+We also select the "best" country in terms of the longest life expectancies for each continent, and the result is shown below.
+
+```{r}
+continent <- c("Asia","Europe","Africa","Americas","Oceania")
+for (i in continent) {
+  tmp <- gapminder2 %>%
+    filter(continent == i) %>%
+    arrange(desc(lifeExp))
+    print(list("country_max_lifeExp"=tmp[1, ]$country, 
+               "continent"=tmp[1, ]$continent, 
+               "max_lifeExp"=tmp[1, ]$lifeExp))
+}
+```
+
+
+# Figures
+
+In this section we presents the scatterplots of life expectancies vs. year for each continent, facetting on country. A linear regression line is also included in the plot. We can see that all these countries show an overall increasing patterns of life expectancies as year increases except Zambia.
+
+![*Fig. 4* life expectancies vs year in Asia](lifeExp_vs_year_in_Asia.png)
+![*Fig. 5* life expectancies vs year in Africa](lifeExp_vs_year_in_Africa.png)
+
+![*Fig. 6* life expectancies vs year in Europe](lifeExp_vs_year_in_Europe.png)
+
+![*Fig. 7* life expectancies vs year in Oceania](lifeExp_vs_year_in_Oceania.png)
+
+![*Fig. 8* life expectancies vs year in Americas](lifeExp_vs_year_in_Americas.png)

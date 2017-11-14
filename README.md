@@ -10,3 +10,4 @@
 - lm report se or sd? difference?
 - "best" country
 - modify ggplot in generating graphs: ticks of year labels change to vertical
+- when to use source()
