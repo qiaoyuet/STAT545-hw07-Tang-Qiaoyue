@@ -1,0 +1,13 @@
+---
+title: "hw07_report"
+author: "Qiaoyue Tang"
+date: "2017/11/13"
+output: html_document
+---
+
+```{r}
+source("01exploratory_analysis.R")
+source("02statistical_analysis.R")
+source("03figures.R")
+```
+
