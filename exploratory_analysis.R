@@ -9,20 +9,14 @@ library(forcats)
 gapminder <- read.delim("gapminder.tsv")
 
 # Descriptive Plots
-# ggplot(gapminder, aes(year, lifeExp, colour=continent)) + geom_smooth(method="lm", se=FALSE)
-# ggsave("lifeexp_vs_year.png")
-# 
-# ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) + 
-#   geom_point(aes(color=continent), alpha=0.5) + scale_x_log10()
-# ggsave("gdp_vs_lifeexp.png")
-
 ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point()
 ggsave("lifeexp_vs_year.png")
 
 ggplot(gapminder, aes(x=year, y=gdpPercap)) + geom_point()
 ggsave("gdp_vs_year.png")
 
-ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) + geom_point()
+ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) +
+  geom_point(aes(color=continent), alpha=0.5) + scale_x_log10()
 ggsave("gdp_vs_lifeexp.png")
 
 # Reorder the continents based on life expectancy
