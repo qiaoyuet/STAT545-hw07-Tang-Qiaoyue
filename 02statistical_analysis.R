@@ -37,7 +37,7 @@ slope.se = c(df1$std.error[2], df2$std.error[2],
 
 lm_info <- data.frame(country, intercept.estimate,intercept.se,slope.estimate,slope.se)
 
-write.csv(lm_info, "lm_info.csv")
+write.table(lm_info, "lm_info.tsv")
 
 # Find out which country are the best in terms of highest life expectancies for each continent.
 continent <- c("Asia","Europe","Africa","Americas","Oceania")
