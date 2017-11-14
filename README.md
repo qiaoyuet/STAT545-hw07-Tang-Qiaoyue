@@ -19,7 +19,7 @@ In this homework I mainly practised how to use `make` to automate data analysis 
 
 ## Dependency Graph
 
-<img src="out.png" width="800" height="600">
+<img src="out.png" width="700" height="300">
 
 This graph is made using [makefile2graph](https://github.com/lindenb/makefile2graph)
 
