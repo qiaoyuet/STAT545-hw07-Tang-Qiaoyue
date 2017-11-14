@@ -8,7 +8,7 @@ library(glue)
 # Create a figure for each continent, and write one file per continent, 
 # with an informative name. The figure should give scatterplots of life expectancy vs. year, 
 # faceting on country, fitted line overlaid.
-
+gapminder2 <- read.delim("gapminder2.tsv")
 p1 <- gapminder2 %>% filter(continent == "Asia") %>% group_by(country)
 p2 <- gapminder2 %>% filter(continent == "Africa") %>% group_by(country)
 p3 <- gapminder2 %>% filter(continent == "Europe") %>% group_by(country)

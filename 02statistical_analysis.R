@@ -3,6 +3,7 @@
 # Libaries
 library(broom)
 library(dplyr)
+library(forcats)
 
 # Import the data created in the first script.
 gapminder2 <- read.delim("gapminder2.tsv")
