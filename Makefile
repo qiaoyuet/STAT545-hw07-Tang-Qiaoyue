@@ -15,7 +15,6 @@ lm_info.tsv: gapminder2.tsv
 
 lifeExp_vs_year_in_Asia.png lifeExp_vs_year_in_Africa.png lifeExp_vs_year_in_Europe.png lifeExp_vs_year_in_Oceania.png lifeExp_vs_year_in_Ameicas.png: gapminder2.tsv lm_info.tsv
 	Rscript 03figures.R
-	rm Rplots.pdf
 
 hw07_report.html: hw07_report.rmd gapminder.tsv gapminder2.tsv lm_info.tsv lifeExp_vs_year_in_Asia.png lifeExp_vs_year_in_Africa.png lifeExp_vs_year_in_Europe.png lifeExp_vs_year_in_Oceania.png lifeExp_vs_year_in_Ameicas.png lifeexp_vs_year.png gdp_vs_year.png gdp_vs_lifeexp.png pop_vs_year.png
 	Rscript -e 'rmarkdown::render("$<")'

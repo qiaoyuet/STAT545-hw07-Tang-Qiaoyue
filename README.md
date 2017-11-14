@@ -28,10 +28,9 @@ This graph is made using [makefile2graph](https://github.com/lindenb/makefile2gr
 - The other thing I encountered is to make for loop to run all the highly-replicated code. I had difficulties when including `ggsave()` in the for loop expecially when giving each output a different name. I eventually used paste0 to do that.
 
 ## TODOs
-- add more descriptive plots: population
+- add more descriptive plots?
 - Make sure your new continent order is still in force: order does not survive from saving into tsv
 - lm report se or sd? difference?
 - "best" country
 - when to use source()
-- for loops, paste0
-- make lm.result more neat to present
+- make lm.info more neat to present
