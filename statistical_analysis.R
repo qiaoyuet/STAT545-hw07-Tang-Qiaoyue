@@ -2,6 +2,7 @@
 
 # Libaries
 library(broom)
+library(dplyr)
 
 # Import the data created in the first script.
 gapminder2 <- read.delim("gapminder2.tsv")
@@ -38,4 +39,11 @@ lm_info <- data.frame(country, intercept.estimate,intercept.se,slope.estimate,sl
 
 write.csv(lm_info, "lm_info.csv")
 
-# Find the 3 or 4 “worst” and “best” countries for each continent.
+# Find out which country are the best in terms of highest life expectancies for each continent.
+continent <- c("Asia","Europe","Africa","Americas","Oceania")
+for (i in continent) {
+  tmp <- gapminder2 %>%
+    filter(continent == i) %>%
+    arrange(desc(lifeExp))
+    print(list("country_max_lifeExp"=tmp[1, ]$country, "continent"=tmp[1, ]$continent, "max_lifeExp"=tmp[1, ]$lifeExp))
+}

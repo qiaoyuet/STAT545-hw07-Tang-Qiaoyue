@@ -35,11 +35,22 @@ gapminder2 <- gapminder %>%
   mutate(continent = factor(as.character(continent), new_levels),
          food = fct_recode(country, 
                            "Sushi" = "Japan",
+                           "DimSum" = "China",
                            "Poutine" = "Canada",
+                           "Chili" = "Chile",
                            "Fish&Chips" = "United Kingdom",
+                           "Wine" = "France",
+                           "Chocolate" = "Belgium",
                            "Taco" = "Mexico",
-                           "Kimchi" = "Korea, Rep.")) %>%
-  filter(country %in% c("Japan", "Canada", "United Kingdom", "Mexico", "Korea, Rep.")) %>%
+                           "Kimchi" = "Korea, Rep.",
+                           "Porridge" = "Zambia",
+                           "Boerewors" = "South Africa",
+                           "Chapati" = "Tanzania",
+                           "Milk" = "New Zealand",
+                           "kangaroo" = "Australia")) %>%
+  filter(country %in% c("Japan", "Canada", "United Kingdom", "Mexico", "Korea, Rep.",
+                        "China","Chile","France","Belgium","Zambia","South Africa",
+                        "Tanzania","New Zealand","Australia")) %>%
   arrange(lifeExp) %>%
   droplevels()
 
