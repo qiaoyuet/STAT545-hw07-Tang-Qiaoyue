@@ -16,19 +16,19 @@ p4 <- gapminder2 %>% filter(continent == "Oceania") %>% group_by(country)
 p5 <- gapminder2 %>% filter(continent == "Americas") %>% group_by(country)
 
 ggplot(p1, aes(year, lifeExp, colour = country)) + geom_point() + geom_smooth(method="lm", se=FALSE) + facet_wrap(~ country)
-ggsave("lifeExp_vs_year_in_Asia")
+ggsave("lifeExp_vs_year_in_Asia.png")
 
 ggplot(p2, aes(year, lifeExp, colour = country)) + geom_point() + geom_smooth(method="lm", se=FALSE) + facet_wrap(~ country)
-ggsave("lifeExp_vs_year_in_Africa")
+ggsave("lifeExp_vs_year_in_Africa.png")
 
 ggplot(p3, aes(year, lifeExp, colour = country)) + geom_point() + geom_smooth(method="lm", se=FALSE) + facet_wrap(~ country)
-ggsave("lifeExp_vs_year_in_Europe")
+ggsave("lifeExp_vs_year_in_Europe.png")
 
 ggplot(p4, aes(year, lifeExp, colour = country)) + geom_point() + geom_smooth(method="lm", se=FALSE) + facet_wrap(~ country)
-ggsave("lifeExp_vs_year_in_Oceania")
+ggsave("lifeExp_vs_year_in_Oceania.png")
 
 ggplot(p5, aes(year, lifeExp, colour = country)) + geom_point() + geom_smooth(method="lm", se=FALSE) + facet_wrap(~ country)
-ggsave("lifeExp_vs_year_in_Ameicas")
+ggsave("lifeExp_vs_year_in_Ameicas.png")
 
 # continent <- c("Asia","Europe","Africa","Americas","Oceania")
 # for(i in continent) {
