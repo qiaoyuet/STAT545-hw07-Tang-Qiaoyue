@@ -9,15 +9,34 @@ library(forcats)
 gapminder <- read.delim("gapminder.tsv")
 
 # Descriptive Plots
-ggplot(gapminder, aes(x=year, y=lifeExp)) + geom_point()
-ggsave("lifeexp_vs_year.png")
+ggplot(gapminder, aes(year, lifeExp, color = continent)) + 
+  geom_line(aes(group=country), alpha=0.5) +
+  ggtitle("Life Expectancy vs. Year for All countries") + 
+  labs(x="Year", y="Life Expectancy") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("lifeexp_vs_year.png", width = 10, height = 5)
 
-ggplot(gapminder, aes(x=year, y=gdpPercap)) + geom_point()
-ggsave("gdp_vs_year.png")
+ggplot(gapminder, aes(x=year, y=gdpPercap, color = continent)) + 
+  geom_line(aes(group=country), alpha=0.5) +
+  ggtitle("GDP vs. Year for All countries") + 
+  labs(x="Year", y="GDP") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("gdp_vs_year.png", width = 10, height = 5)
 
 ggplot(gapminder, aes(x=gdpPercap, y=lifeExp)) +
-  geom_point(aes(color=continent), alpha=0.5) + scale_x_log10()
-ggsave("gdp_vs_lifeexp.png")
+  geom_point(aes(color=continent), alpha=0.5) + 
+  scale_x_log10() +
+  ggtitle("Life Expectancy vs. GDP for All countries") + 
+  labs(x="Year", y="Life Expectancy") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("gdp_vs_lifeexp.png", width = 10, height = 5)
+
+ggplot(gapminder, aes(x=year, y=pop)) +
+  geom_point(aes(color=continent), alpha=0.5) + 
+  ggtitle("Population vs. Year for All countries") + 
+  labs(x="Year", y="Population") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("pop_vs_year.png", width = 10, height = 5)
 
 # Reorder the continents based on life expectancy
 old_levels <- levels(gapminder$continent)
